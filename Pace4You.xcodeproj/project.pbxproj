@@ -51,6 +51,7 @@
 		0BDF92022C1CE07C00060A67 /* Pace4You */ = {
 			isa = PBXGroup;
 			children = (
+				0BDF92152C1CE1BF00060A67 /* Utils */,
 				0BDF92142C1CE1A100060A67 /* Services */,
 				0BDF92132C1CE17C00060A67 /* ViewModels */,
 				0BDF92122C1CE0FA00060A67 /* Models */,
@@ -97,6 +98,13 @@
 			children = (
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		0BDF92152C1CE1BF00060A67 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
