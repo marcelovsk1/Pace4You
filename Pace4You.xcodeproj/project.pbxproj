@@ -12,6 +12,8 @@
 		0BDF92082C1CE07E00060A67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BDF92072C1CE07E00060A67 /* Assets.xcassets */; };
 		0BDF920B2C1CE07E00060A67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BDF920A2C1CE07E00060A67 /* Preview Assets.xcassets */; };
 		0BDF92172C1CE1E000060A67 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDF92162C1CE1E000060A67 /* Models.swift */; };
+		0BDF92192C1CE28400060A67 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDF92182C1CE28400060A67 /* Services.swift */; };
+		0BDF921B2C1CE2FF00060A67 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDF921A2C1CE2FE00060A67 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		0BDF92072C1CE07E00060A67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0BDF920A2C1CE07E00060A67 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0BDF92162C1CE1E000060A67 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		0BDF92182C1CE28400060A67 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		0BDF921A2C1CE2FE00060A67 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 		0BDF92132C1CE17C00060A67 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				0BDF921A2C1CE2FE00060A67 /* ViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -99,6 +104,7 @@
 		0BDF92142C1CE1A100060A67 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0BDF92182C1CE28400060A67 /* Services.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -180,7 +186,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BDF921B2C1CE2FF00060A67 /* ViewModel.swift in Sources */,
 				0BDF92172C1CE1E000060A67 /* Models.swift in Sources */,
+				0BDF92192C1CE28400060A67 /* Services.swift in Sources */,
 				0BDF92062C1CE07C00060A67 /* ContentView.swift in Sources */,
 				0BDF92042C1CE07C00060A67 /* Pace4YouApp.swift in Sources */,
 			);
