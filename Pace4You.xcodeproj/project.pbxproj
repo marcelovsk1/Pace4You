@@ -51,6 +51,7 @@
 		0BDF92022C1CE07C00060A67 /* Pace4You */ = {
 			isa = PBXGroup;
 			children = (
+				0BDF92132C1CE17C00060A67 /* ViewModels */,
 				0BDF92122C1CE0FA00060A67 /* Models */,
 				0BDF92112C1CE0D700060A67 /* Views */,
 				0BDF92032C1CE07C00060A67 /* Pace4YouApp.swift */,
@@ -81,6 +82,13 @@
 			children = (
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		0BDF92132C1CE17C00060A67 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
