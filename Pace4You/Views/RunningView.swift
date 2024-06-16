@@ -16,6 +16,10 @@ struct RunningView: View {
     @State private var timer: Timer?
     @State private var isPaused: Bool = false
     @State private var temperature: String = "--"
+    @State private var staticRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 40.7580, longitude: -73.9855), // Times Square coordinates
+        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+    )
 
     var body: some View {
         ZStack {
@@ -25,8 +29,6 @@ struct RunningView: View {
             
             // Overlay Content
             VStack {
-                Spacer()
-                
                 if isPaused {
                     pausedView
                         .transition(.move(edge: .bottom))
@@ -41,40 +43,66 @@ struct RunningView: View {
     }
     
     var pausedView: some View {
-        VStack(spacing: 20) {
+        VStack {
+            Spacer().frame(height: 10) // Add space for Dynamic Island
+            
             Text("Run Paused")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
+                .shadow(radius: 10)
+                .padding(.top, 40)
             
-            HStack {
-                Image(systemName: "clock.fill")
-                    .foregroundColor(.white)
-                Text("Time: \(formattedTime(duration))")
-                    .foregroundColor(.white)
-                    .font(.headline)
+            // Miniature Map
+            Map(coordinateRegion: .constant(staticRegion), interactionModes: [])
+                .frame(height: 300)
+                .cornerRadius(15)
+                .shadow(radius: 10)
+                .padding([.leading, .trailing], 1)
+            
+            VStack(spacing: 10) {
+                HStack {
+                    Image(systemName: "clock.fill")
+                        .foregroundColor(.white)
+                    Text("Time: \(formattedTime(duration))")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                }
+                HStack {
+                    Image(systemName: "map.fill")
+                        .foregroundColor(.white)
+                    Text("Distance: \(String(format: "%.2f", distance)) km")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                }
+                HStack {
+                    Image(systemName: "speedometer")
+                        .foregroundColor(.white)
+                    Text("Pace: \(String(format: "%.2f", pace)) min/km")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                }
+                HStack {
+                    Image(systemName: "thermometer")
+                        .foregroundColor(.white)
+                    Text("Temperature: \(temperature)°C")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                }
             }
-            HStack {
-                Image(systemName: "map.fill")
-                    .foregroundColor(.white)
-                Text("Distance: \(String(format: "%.2f", distance)) km")
-                    .foregroundColor(.white)
-                    .font(.headline)
-            }
-            HStack {
-                Image(systemName: "speedometer")
-                    .foregroundColor(.white)
-                Text("Pace: \(String(format: "%.2f", pace)) min/km")
-                    .foregroundColor(.white)
-                    .font(.headline)
-            }
-            HStack {
-                Image(systemName: "thermometer")
-                    .foregroundColor(.white)
-                Text("Temperature: \(temperature)°C")
-                    .foregroundColor(.white)
-                    .font(.headline)
-            }
+            .padding(.top)
+            .padding([.leading, .trailing], 20)
+//            .background(Color.black.opacity(0.6))
+            .cornerRadius(15)
+            .shadow(radius: 10)
+            
+            Spacer()
+            
+            .padding(.bottom, 30)
+            .padding([.leading, .trailing], 20)
+//            .background(Color.black.opacity(0.6))
+            .cornerRadius(15)
+            .shadow(radius: 10)
             
             Button(action: {
                 isPaused = false
@@ -88,14 +116,14 @@ struct RunningView: View {
                     .foregroundColor(.white)
                     .background(Color.green)
                     .cornerRadius(15)
-                    .padding(.horizontal)
+//                    .padding([.leading, .trailing], 20)
                     .shadow(radius: 10)
             }
+            .padding(.bottom, 50)
         }
         .padding()
-        .background(Color.black.opacity(0.7))
-        .cornerRadius(20)
-        .padding()
+        .background(Color.purple)
+        .edgesIgnoringSafeArea(.all)
     }
     
     var runningView: some View {
@@ -134,7 +162,7 @@ struct RunningView: View {
                     .foregroundColor(.white)
             }
             .padding()
-            .background(Color.black.opacity(0.4))
+            .background(Color.purple.opacity(0.9))
             .cornerRadius(20)
             .padding([.leading, .trailing])
             
@@ -143,7 +171,7 @@ struct RunningView: View {
                 stopRun()
                 fetchTemperature()
             }) {
-                Text("STOP")
+                Text("Pause")
                     .font(.title2)
                     .fontWeight(.bold)
                     .frame(minWidth: 0, maxWidth: .infinity)

@@ -4,7 +4,7 @@ import MapKit
 
 class LocationService: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), // Localização padrão
+        center: CLLocationCoordinate2D(latitude: 45.5017, longitude: -73.5673), // Localização padrão para Montreal, Quebec
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
     
