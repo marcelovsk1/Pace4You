@@ -17,71 +17,102 @@ struct RunningView: View {
     @State private var isPaused: Bool = false
 
     var body: some View {
-        VStack {
-            UserTrackingMapView(region: $locationService.region)
-                .frame(height: 300)
-            
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Distance: \(String(format: "%.2f", distance)) km")
-                    Text("Time: \(formattedTime(duration))")
-                    Text("Pace: \(String(format: "%.2f", pace)) min/km")
-                }
-                Spacer()
-                // Avatar Placeholder
-                Image(systemName: "figure.walk.circle.fill")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-            }
-            .padding()
-            
-            Spacer()
-            
-            Button(action: {
-                isPaused.toggle()
-                if isPaused {
-                    stopRun()
-                } else {
-                    resumeRun()
-                }
-            }) {
-                Text(isPaused ? "RESUME" : "STOP")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .frame(minWidth: 0, maxWidth: .infinity)
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.6)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+
+            VStack {
+                UserTrackingMapView(region: $locationService.region)
+                    .frame(height: 300)
+                    .cornerRadius(20)
                     .padding()
-                    .foregroundColor(.white)
-                    .background(isPaused ? Color.green : Color.red)
-                    .cornerRadius(10)
-                    .padding(.horizontal)
+
+                HStack {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "map.fill")
+                                .foregroundColor(.white)
+                            Text("Distance: \(String(format: "%.2f", distance)) km")
+                                .foregroundColor(.white)
+                                .font(.headline)
+                        }
+                        HStack {
+                            Image(systemName: "clock.fill")
+                                .foregroundColor(.white)
+                            Text("Time: \(formattedTime(duration))")
+                                .foregroundColor(.white)
+                                .font(.headline)
+                        }
+                        HStack {
+                            Image(systemName: "speedometer")
+                                .foregroundColor(.white)
+                            Text("Pace: \(String(format: "%.2f", pace)) min/km")
+                                .foregroundColor(.white)
+                                .font(.headline)
+                        }
+                    }
+                    Spacer()
+                    // Avatar Placeholder
+                    Image(systemName: "figure.walk.circle.fill")
+                        .resizable()
+                        .frame(width: 60, height: 60)
+                        .foregroundColor(.white)
+                }
+                .padding()
+                .background(Color.black.opacity(0.4))
+                .cornerRadius(20)
+                .padding([.leading, .trailing])
+
+                Spacer()
+
+                Button(action: {
+                    isPaused.toggle()
+                    if isPaused {
+                        stopRun()
+                    } else {
+                        resumeRun()
+                    }
+                }) {
+                    Text(isPaused ? "Resume" : "Pause")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(isPaused ? Color.green : Color.red)
+                        .cornerRadius(50)
+                        .padding(.horizontal)
+                        .shadow(radius: 10)
+                }
             }
+            .padding(.top)
         }
         .onAppear(perform: startRun)
     }
-    
+
     func startRun() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             duration += 1.0
             updatePace()
         }
     }
-    
+
     func stopRun() {
         timer?.invalidate()
         timer = nil
     }
-    
+
     func resumeRun() {
         startRun()
     }
-    
+
     func updatePace() {
         // Calculate pace based on duration and distance
         if distance > 0 {
             pace = duration / 60.0 / distance
         }
     }
-    
+
     func formattedTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
