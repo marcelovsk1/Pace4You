@@ -25,13 +25,18 @@ struct RunningView: View {
             
             // Overlay Content
             VStack {
+                Spacer()
+                
                 if isPaused {
                     pausedView
+                        .transition(.move(edge: .bottom))
                 } else {
                     runningView
+                        .transition(.move(edge: .bottom))
                 }
             }
         }
+        .animation(.easeInOut, value: isPaused)
         .onAppear(perform: startRun)
     }
     
