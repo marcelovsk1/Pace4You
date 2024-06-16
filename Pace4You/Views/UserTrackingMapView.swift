@@ -8,30 +8,52 @@
 import SwiftUI
 import MapKit
 
-struct UserTrackingMapView: View {
+struct UserTrackingMapView: UIViewRepresentable {
     @Binding var region: MKCoordinateRegion
 
-    var body: some View {
-        Map(coordinateRegion: $region, showsUserLocation: true)
-            .edgesIgnoringSafeArea(.top)
-            .frame(height: 300)
-            .onAppear {
-                setRegionToUserLocation()
-            }
+    func makeUIView(context: Context) -> MKMapView {
+        let mapView = MKMapView()
+        mapView.delegate = context.coordinator
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+        mapView.mapType = .standard
+        mapView.isPitchEnabled = true
+        mapView.isRotateEnabled = true
+        
+        // Set initial region to Times Square, New York in 3D
+        let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 40.7580, longitude: -73.9855),
+                                 fromDistance: 1000,
+                                 pitch: 60,
+                                 heading: 0)
+        mapView.setCamera(camera, animated: false)
+
+        return mapView
     }
-    
-    private func setRegionToUserLocation() {
-        // Set initial region to user location (this could be refined with CLLocationManager if needed)
-        region = MKCoordinateRegion(
-            center: CLLocationManager().location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
-            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        )
+
+    func updateUIView(_ mapView: MKMapView, context: Context) {
+        mapView.setRegion(region, animated: true)
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, MKMapViewDelegate {
+        var parent: UserTrackingMapView
+
+        init(_ parent: UserTrackingMapView) {
+            self.parent = parent
+        }
+
+        func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            parent.region = mapView.region
+        }
     }
 }
 
 #Preview {
     UserTrackingMapView(region: .constant(MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
-        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        center: CLLocationCoordinate2D(latitude: 40.7580, longitude: -73.9855),
+        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )))
 }

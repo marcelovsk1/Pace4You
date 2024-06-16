@@ -16,6 +16,7 @@ struct RunView: View {
         NavigationView {
             VStack {
                 UserTrackingMapView(region: $locationService.region)
+                    .frame(height: 300)
                 
                 Button(action: {
                     isRunning = true
