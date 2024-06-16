@@ -14,10 +14,12 @@ struct RunningView: View {
     @State private var duration: TimeInterval = 0.0
     @State private var pace: Double = 0.0
     @State private var timer: Timer?
+    @State private var isPaused: Bool = false
 
     var body: some View {
         VStack {
             UserTrackingMapView(region: $locationService.region)
+                .frame(height: 300)
             
             HStack {
                 VStack(alignment: .leading) {
@@ -35,14 +37,21 @@ struct RunningView: View {
             
             Spacer()
             
-            Button(action: stopRun) {
-                Text("STOP")
+            Button(action: {
+                isPaused.toggle()
+                if isPaused {
+                    stopRun()
+                } else {
+                    resumeRun()
+                }
+            }) {
+                Text(isPaused ? "RESUME" : "STOP")
                     .font(.title)
                     .fontWeight(.bold)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .padding()
                     .foregroundColor(.white)
-                    .background(Color.red)
+                    .background(isPaused ? Color.green : Color.red)
                     .cornerRadius(10)
                     .padding(.horizontal)
             }
@@ -60,7 +69,10 @@ struct RunningView: View {
     func stopRun() {
         timer?.invalidate()
         timer = nil
-        // Handle stopping logic and data saving
+    }
+    
+    func resumeRun() {
+        startRun()
     }
     
     func updatePace() {
