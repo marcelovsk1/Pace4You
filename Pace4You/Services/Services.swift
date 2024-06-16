@@ -1,26 +1,27 @@
+////
+////  Services.swift
+////  Pace4You
+////
+////  Created by Marcelo Amaral Alves on 2024-06-14.
+////
 //
-//  Services.swift
-//  Pace4You
+//import Foundation
+//import CoreLocation
 //
-//  Created by Marcelo Amaral Alves on 2024-06-14.
+//class LocationService: NSObject, ObservableObject, CLLocationManagerDelegate {
+//    @Published var currentLocation: CLLocation?
+//    private var locationManager = CLLocationManager()
+//    
+//    override init() {
+//        super.init()
+//        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+//    }
+//    
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        currentLocation = locations.last
+//    }
+//}
 //
-
-import Foundation
-import CoreLocation
-
-class LocationService: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var currentLocation: CLLocation?
-    private var locationManager = CLLocationManager()
-    
-    override init() {
-        super.init()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.last
-    }
-}
-
+//

@@ -1,11 +1,12 @@
 //
-//  View_1.swift
+//  MainView.swift
 //  Pace4You
 //
 //  Created by Marcelo Amaral Alves on 2024-06-14.
 //
 
 import SwiftUI
+import MapKit
 
 struct MainView: View {
     var body: some View {
@@ -38,25 +39,35 @@ struct MainView: View {
 }
 
 struct RunView: View {
-    @StateObject private var viewModel = RunViewModel()
+    @StateObject private var locationService = LocationService()
+    @State private var tracking: MapUserTrackingMode = .follow
     
     var body: some View {
         VStack {
-            // Run tracking interface
-            Text("Run Tracking")
-            Button("Start Run") {
-                viewModel.startRun()
+            Map(coordinateRegion: $locationService.region, interactionModes: .all, showsUserLocation: true, userTrackingMode: $tracking)
+                .edgesIgnoringSafeArea(.top)
+                .frame(height: 300)
+            
+            Button(action: {
+                // Ação do botão START
+            }) {
+                Text("START")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    .padding(.horizontal)
             }
-            Button("End Run") {
-                viewModel.endRun()
-            }
+            
+            Spacer()
         }
     }
 }
 
 struct MapView: View {
-    @StateObject private var locationService = LocationService()
-    
     var body: some View {
         VStack {
             Text("Map and Routes")
