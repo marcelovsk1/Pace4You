@@ -19,9 +19,14 @@ struct UserTrackingMapView: UIViewRepresentable {
         mapView.mapType = .standard
         mapView.isPitchEnabled = true
         mapView.isRotateEnabled = true
-        mapView.camera.altitude = 500
-        mapView.camera.pitch = 45
-        mapView.camera.heading = 0
+        
+        // Set initial region to Times Square, New York in 3D
+        let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 40.7580, longitude: -73.9855),
+                                 fromDistance: 1000,
+                                 pitch: 60,
+                                 heading: 0)
+        mapView.setCamera(camera, animated: false)
+
         return mapView
     }
 
@@ -48,7 +53,7 @@ struct UserTrackingMapView: UIViewRepresentable {
 
 #Preview {
     UserTrackingMapView(region: .constant(MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
-        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        center: CLLocationCoordinate2D(latitude: 40.7580, longitude: -73.9855),
+        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )))
 }
